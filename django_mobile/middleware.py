@@ -5,7 +5,7 @@ from django_mobile import flavour_storage
 from django_mobile import set_flavour, _init_flavour
 from django_mobile.conf import settings
 
-
+"""
 class SetFlavourMiddleware(object):
     def process_request(self, request):
         _init_flavour(request)
@@ -18,7 +18,7 @@ class SetFlavourMiddleware(object):
     def process_response(self, request, response):
         flavour_storage.save(request, response)
         return response
-
+"""
 
 class MobileDetectionMiddleware(object):
     user_agents_test_match = (
@@ -77,9 +77,9 @@ class MobileDetectionMiddleware(object):
                     is_mobile = True
 
         if is_mobile:
-            set_flavour(settings.DEFAULT_MOBILE_FLAVOUR, request)
+            set_flavour(settings.DEFAULT_MOBILE_FLAVOUR, request, permanent=True)
         else:
-            set_flavour(settings.FLAVOURS[0], request)
+            set_flavour(settings.FLAVOURS[0], request, permanent=True)
 
     def process_response(self, request, response):
         patch_vary_headers(response, ('User-Agent',))
